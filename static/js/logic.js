@@ -88,4 +88,21 @@ function getColor(depth) {
   }
 
   return colors[colors.length - 1];
-}
+};
+
+
+// Adding a legend (this part sourced and heavily cribbed from stackexchange)
+const legend = L.control({position: 'bottomright'});
+legend.onAdd = function(map) {
+    const div = L.DomUtil.create('div', 'info legend');
+    const depthRange = [0, 5, 10, 25, 50, 100, 250, 1000];
+    // loop through our depth intervals and generate a label with a colored square for each interval
+    for (let i = 0; i < depthRange.length; i++) {
+      div.innerHTML +=
+        '<div><span style="background:' + getColor(depthRange[i] + 1) + '; display:inline-block; width:18px; height:18px; margin-right:8px; opacity:0.7;"></span> ' +
+        depthRange[i] + (depthRange[i + 1] ? '&ndash;' + depthRange[i + 1] + 'km' + '<br>' : 'km+') + '</div>';
+    }
+    return div;
+  };
+  legend.addTo(map);
+  
