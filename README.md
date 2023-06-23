@@ -11,6 +11,6 @@ This repo contains:
 
 Languages & Packages used:
 
-HTML
-JavaScript
-Leaflet for JS
+- HTML
+- JavaScript
+- Leaflet for JS
