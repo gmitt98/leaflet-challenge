@@ -1,8 +1,42 @@
-// Creating the map layer. I set the coordinates to about center on the continental US
-const map = L.map('map').setView([40, -100], 5);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 10,
-}).addTo(map);
+// Creating some map options for fun
+const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 10,
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+const cyclosm = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
+  maxZoom: 10,
+  attribution: '<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+
+const Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC'
+});
+
+const Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+});
+
+const CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+});
+
+// Creating the map layer with OSM as the default. I set the coordinates to about center on the continental US
+const map = L.map('map', {
+    center: [40, -100],
+    zoom: 5, layers: [osm]
+});
+
+// Base layers and controls
+const baseMaps = {
+    "OpenStreetMap": osm,
+    "CyclOSM": cyclosm,
+    "Esri NatGeoWorldMap": Esri_NatGeoWorldMap,
+    "Esri WorldImagery": Esri_WorldImagery,
+    "CartoDB DarkMatter":CartoDB_DarkMatter
+};
+
+L.control.layers(baseMaps).addTo(map);
 
 // Get the earthquake data from USGS, here I am using 7 days
 fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson')
