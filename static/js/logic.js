@@ -1,5 +1,5 @@
 // Creating the map layer. I set the coordinates to about center on the continental US
-var map = L.map('map').setView([40, -100], 5);
+const map = L.map('map').setView([40, -100], 5);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 10,
 }).addTo(map);
@@ -10,30 +10,32 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
   .then(data => {
     // Iterate over the earthquake features
     data.features.forEach(feature => {
-      var coordinates = feature.geometry.coordinates;
-      var magnitude = Math.round(100*Math.abs(feature.properties.mag))/100;
-      var depth = Math.abs(coordinates[2]);
+      let coordinates = feature.geometry.coordinates;
+      let magnitude = Math.round(100*Math.abs(feature.properties.mag))/100;
+      let depth = Math.abs(coordinates[2]);
+      let time = new Date(feature.properties.time).toLocaleString();
 
       console.log('Coordinates:', coordinates);
       console.log('Magnitude:', magnitude);
       console.log('Depth:', depth);
+      console.log('Time:', time);
 
-      // Define the marker size based on the earthquake magnitude
-      var markerSize = Math.pow(magnitude/2,3)*3;
+      // Set marker size based on the earthquake magnitude
+      let markerSize = Math.exp((magnitude/2),8)+2;
 
-      // Define the marker color based on the earthquake depth
-      var markerColor = getColor(depth);
+      // Set marker color based on the earthquake depth
+      let markerColor = getColor(depth);
 
-      // Create a circle marker at the earthquake's coordinates with size and color
+      // Draw the marker
       L.circleMarker([coordinates[1], coordinates[0]], {
         radius: markerSize,
         fillColor: markerColor,
-        color: '#000',
-        weight: 1,
+        color: '#000000',
+        weight: 0.5,
         opacity: 1,
-        fillOpacity: 0.8
+        fillOpacity: .7
       }).addTo(map)
-        .bindPopup('Magnitude: ' + magnitude + '<br>Depth: ' + depth);
+        .bindPopup('Date and Time: ' + time + '<br>Magnitude: ' + magnitude + '<br>Depth: ' + depth + ' km');
     });
   })
   .catch(error => {
@@ -42,10 +44,10 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
 
 // Function to calculate marker color based on earthquake depth
 function getColor(depth) {
-  var colors = ['#FFEDA0', '#FED976', '#FEB24C', '#FD8D3C', '#FC4E2A', '#E31A1C', '#BD0026'];
-  var depthRange = [0, 70, 150, 300, 500, 700, 1000];
+  const colors = ['#07E4D1', '#07E462', '#1BE407', '#89E407', '#E4D107', '#E46207', '#351C0A'];
+  const depthRange = [5, 10, 25, 50, 100, 250, 1000];
 
-  for (var i = 0; i < depthRange.length; i++) {
+  for (let i = 0; i < depthRange.length; i++) {
     if (depth <= depthRange[i]) {
       return colors[i];
     }
