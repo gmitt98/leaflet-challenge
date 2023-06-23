@@ -86,7 +86,7 @@ function getColor(depth) {
       return colors[i];
     }
   }
-
+  
   return colors[colors.length - 1];
 };
 
