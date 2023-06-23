@@ -36,7 +36,10 @@ const baseMaps = {
     "CartoDB DarkMatter":CartoDB_DarkMatter
 };
 
+// Add the basemap control layers to the map so users can select the one they want
 L.control.layers(baseMaps).addTo(map);
+
+
 
 // Get the earthquake data from USGS, here I am using 7 days
 fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson')
@@ -76,6 +79,9 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
     console.error('Error:', error);
   });
 
+
+
+
 // Function to calculate marker color based on earthquake depth
 function getColor(depth) {
   const colors = ['#07E4D1', '#07E462', '#1BE407', '#89E407', '#E4D107', '#E46207', '#351C0A'];
@@ -86,9 +92,11 @@ function getColor(depth) {
       return colors[i];
     }
   }
-  
+
   return colors[colors.length - 1];
 };
+
+
 
 
 // Adding a legend (this part sourced and heavily cribbed from stackexchange)
