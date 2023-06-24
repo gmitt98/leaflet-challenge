@@ -21,8 +21,8 @@ const CartoDB_DarkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_a
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
 });
 
-const Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-	attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+const OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
 });
 
 
@@ -40,7 +40,7 @@ const baseMaps = {
     "Esri NatGeoWorldMap": Esri_NatGeoWorldMap,
     "Esri WorldImagery": Esri_WorldImagery,
     "CartoDB DarkMatter":CartoDB_DarkMatter,
-    "Statmen Watercolor": Stamen_Watercolor
+    "OpenTopoMap": OpenTopoMap
 };
 
 // Add the basemap control layers to the map so users can select the one they want
